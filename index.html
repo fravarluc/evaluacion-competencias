@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Redirigiendo a evaluación...</title>
+  <title>Redirigiendo...</title>
   <style>
     body { font-family: Arial, sans-serif; text-align: center; margin-top: 100px; }
   </style>
@@ -11,14 +11,18 @@
       const params = new URLSearchParams(window.location.search);
       const evaluador = params.get("evaluador");
       const evaluado = params.get("evaluado");
+      const idtypeform = params.get("idtypeform");
 
-      if (!evaluador || !evaluado) {
+      if (!evaluador || !evaluado || !idtypeform) {
         document.body.innerHTML = "Faltan parámetros en la URL.";
         return;
       }
 
       try {
-        const response = await fetch(`https://TU_URL_DE_POWER_AUTOMATE?evaluador=${encodeURIComponent(evaluador)}&evaluado=${encodeURIComponent(evaluado)}`);
+        const response = await fetch(
+          `https://TU_URL_DE_POWER_AUTOMATE?evaluador=${encodeURIComponent(evaluador)}&evaluado=${encodeURIComponent(evaluado)}&idtypeform=${encodeURIComponent(idtypeform)}`
+        );
+
         if (!response.ok) throw new Error("Error en la petición");
 
         const data = await response.json();
@@ -29,15 +33,4 @@
         }
 
       } catch (e) {
-        console.error(e);
-        document.body.innerHTML = "Error al contactar con el sistema.";
-      }
-    }
-
-    window.onload = redirigir;
-  </script>
-</head>
-<body>
-  <p>Redirigiendo, por favor espera...</p>
-</body>
-</html>
+        console.error
